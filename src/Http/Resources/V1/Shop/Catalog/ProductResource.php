@@ -231,7 +231,7 @@ class ProductResource extends JsonResource
     private function getConfigurableProductInfo($product)
     {
         return [
-            'variants' => $product->variants,
+            'variants' => ProductVariantResource::collection($product->variants),
         ];
     }
 
