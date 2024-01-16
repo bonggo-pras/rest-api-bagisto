@@ -16,7 +16,7 @@ Route::get('products/new', [ProductController::class, 'newProducts']);
 
 Route::get('products/featured', [ProductController::class, 'featuredProduct']);
 
-Route::get('products/{id}', [ProductController::class, 'getResource']);
+Route::get('products/{id}', [ProductController::class, 'detailProduct']);
 
 Route::get('products/{id}/additional-information', [ProductController::class, 'additionalInformation']);
 

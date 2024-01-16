@@ -142,6 +142,14 @@ class ProductResource extends JsonResource
                     : null
             ),
 
+            /* grouped product */
+            $this->mergeWhen(
+                $productTypeInstance instanceof \Webkul\Product\Type\Simple,
+                $product->type == 'simple'
+                    ? $this->getSimpleProductInfo($product)
+                    : null
+            ),
+
             /* bundle product */
             $this->mergeWhen(
                 $productTypeInstance instanceof \Webkul\Product\Type\Bundle,
@@ -224,6 +232,26 @@ class ProductResource extends JsonResource
     {
         return [
             'variants' => $product->variants,
+        ];
+    }
+
+    /**
+     * Get Simple product's extra information.
+     *
+     * @param  \Webkul\Product\Models\Product  $product
+     * @return array
+     */
+    private function getSimpleProductInfo($product)
+    {
+        $inventory = $product->inventories()->first();
+        return [
+            'inventories' => [
+                'id' => $inventory->id,
+                'qty' => $inventory->qty,
+                'product_id' => $inventory->product_id,
+                'inventory_source_id' => $inventory->inventory_source_id,
+                'vendor_id' => $inventory->vendor_id,
+            ],
         ];
     }
 

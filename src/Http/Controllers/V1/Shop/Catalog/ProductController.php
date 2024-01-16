@@ -75,6 +75,21 @@ class ProductController extends CatalogController
         return $this->getSimpleResourceCollection($results);
     }
 
+    public function detailProduct(Request $request, int $id)
+    {
+        $resourceClassName = $this->resource();
+
+        $resource = $this->isAuthorized()
+            ? $this->getRepositoryInstance()->where('customer_id', $this->resolveShopUser($request)->id)->findOrFail($id)
+            : $this->getRepositoryInstance()->findOrFail($id);
+
+        foreach ($resource->variants as $item) {
+            if (!$item->inventories) {}
+        }
+
+        return new $resourceClassName($resource);
+    }
+
     /**
      * Returns a listing of the resource.
      *
