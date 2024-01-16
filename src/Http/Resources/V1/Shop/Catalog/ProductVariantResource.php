@@ -30,6 +30,7 @@ class ProductVariantResource extends JsonResource
             'type'               => $product->type,
             'name'               => $product->name,
             'url_key'            => $product->url_key,
+            'attribute_values'   => $product->attribute_values,
             'price'              => core()->convertPrice($productTypeInstance->getMinimalPrice()),
             'formatted_price'    => core()->currency($productTypeInstance->getMinimalPrice()),
             'point'              => $product->point,
