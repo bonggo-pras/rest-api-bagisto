@@ -243,15 +243,10 @@ class ProductResource extends JsonResource
      */
     private function getSimpleProductInfo($product)
     {
-        $inventory = $product->inventories()->first();
+        $inventories = $product->inventories()->get();
+        
         return [
-            'inventories' => [
-                'id' => $inventory->id,
-                'qty' => $inventory->qty,
-                'product_id' => $inventory->product_id,
-                'inventory_source_id' => $inventory->inventory_source_id,
-                'vendor_id' => $inventory->vendor_id,
-            ],
+            'inventories' => InventoryProductResource::collection($inventories)
         ];
     }
 
