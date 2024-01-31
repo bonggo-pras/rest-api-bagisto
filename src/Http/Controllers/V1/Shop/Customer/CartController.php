@@ -71,7 +71,7 @@ class CartController extends CustomerController
             $cart = Cart::getCart();
 
             return response([
-                'data'    => $cart ? new CartResource($cart) : null,
+                'data'    => null, //for fast respone
                 'message' => __('rest-api::app.checkout.cart.item.success'),
             ]);
         } catch (Exception $e) {

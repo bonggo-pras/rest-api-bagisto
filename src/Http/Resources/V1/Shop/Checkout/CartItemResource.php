@@ -3,7 +3,7 @@
 namespace Webkul\RestApi\Http\Resources\V1\Shop\Checkout;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Webkul\RestApi\Http\Resources\V1\Shop\Catalog\ProductResource;
+use Webkul\RestApi\Http\Resources\V1\Shop\Catalog\SimpleProductResource;
 
 class CartItemResource extends JsonResource
 {
@@ -49,7 +49,7 @@ class CartItemResource extends JsonResource
                 ? $this->resource->additional
                 : json_decode($this->resource->additional, true),
             'child'                          => new self($this->child),
-            'product'                        => $this->when($this->product_id, new ProductResource($this->product)),
+            'product'                        => $this->when($this->product_id, new SimpleProductResource($this->product)),
             'created_at'                     => $this->created_at,
             'updated_at'                     => $this->updated_at,
         ];

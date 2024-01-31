@@ -40,7 +40,7 @@ class SearchController extends CoreController
         $results = $this->searchRepository->searchByCategory($id);
 
         return response([
-            'data' => ProductResource::collection($results),
+            'data' => SimpleProductResource::collection($results),
         ]);
     }
 }
