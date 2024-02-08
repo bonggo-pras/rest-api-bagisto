@@ -40,6 +40,16 @@ class SimpleProductResource extends JsonResource
 
         /* get type instance */
         $productTypeInstance = $product->getTypeInstance();
+        $prices = $productTypeInstance->getProductPrices();
+
+        if (isset($prices['regular_price'])) {
+            $prices = $prices['regular_price'];
+        } else {
+            $prices = [
+                'price'             => core()->convertPrice($productTypeInstance->getMinimalPrice()),
+                'formated_price'    => core()->currency($productTypeInstance->getMinimalPrice()),
+            ];
+        }
 
         /* generating resource */
         return [
@@ -48,11 +58,11 @@ class SimpleProductResource extends JsonResource
             'sku'                => $product->sku,
             'type'               => $product->type,
             'name'               => $product->name,
-            'price'              => core()->convertPrice($productTypeInstance->getMinimalPrice()),
-            'formatted_price'    => core()->currency($productTypeInstance->getMinimalPrice()),
             'point'              => $product->point,
             'images'             => ProductImageResource::collection($product->images),
             'base_image'         => ProductImage::getProductBaseImage($product),
+            'price'              => $prices['price'],
+            'formated_price'     => $prices['formated_price'],
 
             /* product's checks */
             'in_stock'              => $product->haveSufficientQuantity(1),
